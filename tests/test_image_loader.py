@@ -53,3 +53,15 @@ def test_load_missing_file(tmp_path):
 
     with pytest.raises(ValueError, match="Invalid image file"):
         ImageLoader.load(image_path)
+
+
+def test_load_generates_sha256(tmp_path):
+    image_path = tmp_path / "photo.jpg"
+
+    source = PILImage.new("RGB", (100, 100))
+    source.save(image_path)
+
+    image = ImageLoader.load(image_path)
+
+    assert len(image.sha256) == 64
+    
