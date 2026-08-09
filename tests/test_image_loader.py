@@ -76,3 +76,17 @@ def test_load_generates_correct_sha256(tmp_path):
     image = ImageLoader.load(image_path)
 
     assert image.sha256 == sha256(image_path)
+
+
+def test_same_image_has_same_sha256(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    source = PILImage.new("RGB", (100, 100))
+    source.save(image_path)
+
+    first = ImageLoader.load(image_path)
+    second = ImageLoader.load(image_path)
+
+    assert first.sha256 == second.sha256
+
+    
