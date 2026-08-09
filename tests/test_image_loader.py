@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 from PIL import Image as PILImage
+from relic.fingerprint import sha256
 
 from relic.image import Image, ImageMetaData
 from relic.image_loader import ImageLoader
@@ -64,4 +65,14 @@ def test_load_generates_sha256(tmp_path):
     image = ImageLoader.load(image_path)
 
     assert len(image.sha256) == 64
-    
+
+
+def test_load_generates_correct_sha256(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    source = PILImage.new("RGB", (100, 100))
+    source.save(image_path)
+
+    image = ImageLoader.load(image_path)
+
+    assert image.sha256 == sha256(image_path)
