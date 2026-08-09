@@ -11,3 +11,15 @@ def test_phash_returns_hash_for_image(tmp_path):
     result = phash(image_path)
 
     assert result is not None
+
+
+def test_phash_is_deterministic(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    image = PILImage.new("RGB", (100, 100), "white")
+    image.save(image_path)
+
+    first = phash(image_path)
+    second = phash(image_path)
+
+    assert first == second
