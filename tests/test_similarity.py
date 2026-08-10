@@ -20,3 +20,16 @@ def test_similarity_rejects_distance_above_hash_size():
 
 def test_similarity_supports_custom_hash_size():
     assert similarity(8, hash_size=16) == 0.5
+
+@pytest.mark.parametrize(
+    ("distance", "expected"),
+    [
+        (0, 1.0),
+        (16, 0.75),
+        (32, 0.5),
+        (48, 0.25),
+        (64, 0.0),
+    ],
+)
+def test_similarity_returns_expected_values(distance, expected):
+    assert similarity(distance) == expected
