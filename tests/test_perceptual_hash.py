@@ -62,3 +62,23 @@ def test_hamming_distance_is_zero_for_identical_hashes(tmp_path):
     image_hash = phash(image_path)
 
     assert hamming_distance(image_hash, image_hash) == 0
+
+
+
+def test_hamming_distance_is_low_for_similar_images(tmp_path):
+    original_path = tmp_path / "original.png"
+    modified_path = tmp_path / "modified.png"
+
+    original = PILImage.new("RGB", (200, 200), "white")
+    original.save(original_path)
+
+    modified = original.copy()
+    modified.paste("black", (80, 80, 120, 120))
+    modified.save(modified_path)
+
+    first_hash = phash(original_path)
+    second_hash = phash(original_path)
+
+    distance = hamming_distance(first_hash, second_hash)
+
+    assert distance < 10
