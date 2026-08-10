@@ -1,6 +1,9 @@
 from pathlib import Path
-
+from relic.image_loader import ImageLoader
 from relic.image import Image, ImageMetaData
+from PIL import Image as PILImage
+from relic.perceptual_hash import phash
+
 
 def test_image_stores_path():
     path = Path("/tmp/photo.jpg")
@@ -92,3 +95,14 @@ def test_image_stores_sha256():
         "abc123",
     )
     assert image.sha256 == "abc123"
+
+
+def test_image_stores_phash(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    source = PILImage.new("RGB", (100, 100), "white")
+    source.save(image_path)
+
+    image = ImageLoader.load(image_path)
+
+    assert image.phash == phash(image_path)
