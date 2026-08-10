@@ -13,3 +13,7 @@ def test_maximum_distance_has_zero_similarity():
 def test_similarity_rejects_negative_distance():
     with pytest.raises(ValueError, match="cannot be negative"):
         similarity(-1)
+
+def test_similarity_rejects_distance_above_hash_size():
+    with pytest.raises(ValueError, match="cannot exceed hash size"):
+        similarity(65)
