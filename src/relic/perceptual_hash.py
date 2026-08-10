@@ -12,3 +12,6 @@ def hamming_distance(
         second: imagehash.ImageHash,
 ) -> int:
     return first - second
+
+def parse_phash(value: str) -> imagehash.ImageHash:
+    return imagehash.hex_to_hash(value)
