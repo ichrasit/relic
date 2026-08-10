@@ -9,3 +9,6 @@ def match(first: Image, second: Image) -> float:
     distance = hamming_distance(first_hash, second_hash)
 
     return similarity(distance)
+
+def exact_match(first: Image, second: Image) -> bool:
+    return first.sha256 == second.sha256
