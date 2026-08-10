@@ -33,3 +33,7 @@ def test_similarity_supports_custom_hash_size():
 )
 def test_similarity_returns_expected_values(distance, expected):
     assert similarity(distance) == expected
+
+def test_similarity_rejects_non_positive_hash_size():
+    with pytest.raises(ValueError, match="hash size"):
+        similarity(0, hash_size=0)
