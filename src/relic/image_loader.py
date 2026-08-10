@@ -1,8 +1,9 @@
 from pathlib import Path
 from PIL import Image as PILImage
-
+from relic.fingerprint import sha256
 from relic.image import Image, ImageMetaData
 from relic.filesystem import is_image
+from relic.perceptual_hash import phash
 
 class ImageLoader:
     @staticmethod
@@ -17,4 +18,9 @@ class ImageLoader:
                 mode=image.mode,
             )
 
-        return Image(path=path, metadata=metadata)
+        return Image(
+            path=path,
+            metadata=metadata,
+            sha256=sha256(path),
+            phash=str(phash(path)),
+        )

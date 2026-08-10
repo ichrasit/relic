@@ -13,3 +13,5 @@ class ImageMetaData:
 class Image:
     path: Path
     metadata: ImageMetaData
+    sha256: str
+    phash: str
