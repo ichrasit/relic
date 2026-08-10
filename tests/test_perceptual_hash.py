@@ -36,3 +36,15 @@ def test_phash_matches_resized_image(tmp_path):
     resized.save(resized_path)
 
     assert phash(original_path) == phash(resized_path)
+
+def test_phash_distinguishes_different_images(tmp_path):
+    first_path = tmp_path / "first.png"
+    second_path = tmp_path / "second.png"
+
+    first = PILImage.new("RGB", (100, 100), "white")
+    first.save(first_path)
+
+    second = PILImage.new("RGB", (100, 100), "black")
+    second.save(second_path)
+
+    assert phash(first_path) != phash(second_path)
