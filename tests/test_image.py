@@ -105,4 +105,4 @@ def test_image_stores_phash(tmp_path):
 
     image = ImageLoader.load(image_path)
 
-    assert image.phash == phash(image_path)
+    assert image.phash == str(phash(image_path))
