@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 from PIL import Image as PILImage
+
 from relic.fingerprint import sha256
 
 from relic.image import Image, ImageMetaData
@@ -89,4 +90,14 @@ def test_same_image_has_same_sha256(tmp_path):
 
     assert first.sha256 == second.sha256
 
-    
+
+def test_load_image_creates_fingerprints(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    source = PILImage.new("RGB", (400, 300), "white")
+    source.save(image_path)
+
+    image = ImageLoader.load(image_path)
+
+    assert image.sha256
+    assert image.phash
