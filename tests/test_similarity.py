@@ -17,3 +17,6 @@ def test_similarity_rejects_negative_distance():
 def test_similarity_rejects_distance_above_hash_size():
     with pytest.raises(ValueError, match="cannot exceed hash size"):
         similarity(65)
+
+def test_similarity_supports_custom_hash_size():
+    assert similarity(8, hash_size=16) == 0.5
