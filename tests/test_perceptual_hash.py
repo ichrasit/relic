@@ -2,6 +2,8 @@ from PIL import Image as PILImage
 
 from relic.perceptual_hash import phash
 
+from relic.perceptual_hash import hamming_distance, phash
+
 def test_phash_returns_hash_for_image(tmp_path):
     image_path = tmp_path / "photo.png"
 
@@ -48,3 +50,15 @@ def test_phash_distinguishes_different_images(tmp_path):
     second.save(second_path)
 
     assert phash(first_path) != phash(second_path)
+
+
+
+def test_hamming_distance_is_zero_for_identical_hashes(tmp_path):
+    image_path = tmp_path / "photo.png"
+
+    image = PILImage.new("RGB", (100, 100), "white")
+    image.save(image_path)
+
+    image_hash = phash(image_path)
+
+    assert hamming_distance(image_hash, image_hash) == 0
