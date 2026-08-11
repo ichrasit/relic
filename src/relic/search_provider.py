@@ -1,11 +1,10 @@
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
-from relic.image import Image
 from relic.search_result import SearchResult
 
 
 class SearchProvider(ABC):
-    @abstractclassmethod
-    def search(self, image: Image) -> list[SearchResult]:
+    @abstractmethod
+    def search(self, image_url: str) -> list[SearchResult]:
      ...
 
