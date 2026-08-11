@@ -1,8 +1,9 @@
+from datetime import datetime
+
 import httpx
+
 from relic.config import get_serp_api_key
-from relic.image import Image
 from relic.search_result import SearchResult
-from relic.search_provider import SearchProvider
 
 SERPAPI_URL = "https://serpapi.com/search.json"
 
@@ -23,5 +24,15 @@ class SerpApiProvider:
 
         data = response.json()
 
-        # no parsing response for now
-        return []
+        results = []
+        for match in data.get("visual_matches", []):
+            results.append(
+                SearchResult(
+                    url=match["link"],
+                    title=match.get("title", ""),
+                    source=match.get("source", ""),
+                    discovered_at=datetime.now(),
+                    match_score=match.get("match_score", 0.0),
+                )
+        )
+        return results
