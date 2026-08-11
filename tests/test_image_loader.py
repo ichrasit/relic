@@ -4,10 +4,8 @@ import pytest
 from PIL import Image as PILImage
 
 from relic.fingerprint import sha256
-
 from relic.image import Image, ImageMetaData
 from relic.image_loader import ImageLoader
-
 
 def test_load_png_image(tmp_path):
     image_path = tmp_path / "photo.png"
