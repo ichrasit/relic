@@ -15,7 +15,7 @@ class SerpApiProvider:
             "engine": "google_lens",
             "url": image_url,
             "type": "all",
-            "api_key": get_serpapi_api_key(),
+            "api_key": get_serp_api_key(),
         }
 
         response = self.client.get(SERPAPI_URL, params=params)
