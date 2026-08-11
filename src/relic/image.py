@@ -1,12 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-@dataclass(frozen=True)
-class ImageMetaData:
-    width: int 
-    height: int
-    format: str
-    mode: str
+from relic.image_metadata import ImageMetaData
 
 
 @dataclass(frozen=True)

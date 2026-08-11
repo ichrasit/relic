@@ -14,6 +14,7 @@ def test_search_result_extracts_domain():
 
     assert result.domain == "example.com"
 
+
 def test_high_match_score_is_match():
     result = SearchResult(
         url="https://example.com/photo.jpg",
