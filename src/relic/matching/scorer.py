@@ -6,7 +6,11 @@ def parse_phash(value: str) -> int:
     return int(value, 16)
 
 
-def phash_similarity(left: str, right: str, hash_size: int = 64) -> float:
+def phash_similarity(
+    left: str,
+    right: str,
+    hash_size: int = 64,
+) -> float:
     if hash_size <= 0:
         raise ValueError("hash_size must be positive")
 
