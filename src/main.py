@@ -56,9 +56,9 @@ def main() -> int:
     print(f"Found {len(results)} results:\n")
 
     for result in results:
-        print(f"[{result.match_score:.2f}] {result.title}")
-        print(f"  {result.url}")
-        print(f"  {result.domain}")
+        print(result.title)
+        print(result.url)
+        print(result.source)
         print()
 
     return 0
