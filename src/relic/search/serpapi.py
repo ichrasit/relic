@@ -3,7 +3,7 @@ from datetime import datetime
 import httpx
 
 from relic.config import get_serp_api_key
-from relic.search_result import SearchResult
+from relic.search.result import SearchResult
 
 SERPAPI_URL = "https://serpapi.com/search.json"
 

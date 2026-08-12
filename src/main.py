@@ -4,8 +4,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 from relic.application import RelicApplication
 from relic.cloudinary_uploader import CloudinaryUploader
-from relic.investigator import Investigator
-from relic.serpapi_provider import SerpApiProvider
+from relic.investigation.investigator import Investigator
+from relic.search.serpapi import SerpApiProvider
 
 load_dotenv()
 

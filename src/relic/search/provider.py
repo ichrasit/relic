@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from relic.search_result import SearchResult
+from relic.search.result import SearchResult
 
 
 class SearchProvider(ABC):

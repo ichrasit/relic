@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from relic.image_loader import ImageLoader
-from relic.investigator import Investigator
-from relic.search_result import SearchResult
+from relic.image.loader import ImageLoader
+from relic.investigation.investigator import Investigator
+from relic.search.result import SearchResult
 
 class RelicApplication:
     def __init__(self, investigator: Investigator):

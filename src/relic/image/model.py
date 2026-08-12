@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-from relic.image_metadata import ImageMetaData
+from relic.image.metadata import ImageMetaData
 
 
 @dataclass(frozen=True)
