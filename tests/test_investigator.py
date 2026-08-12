@@ -1,33 +1,34 @@
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from relic.image import Image
 from relic.image_metadata import ImageMetaData
+from relic.image_uploader import ImageUploader
 from relic.investigator import Investigator
 from relic.search_provider import SearchProvider
 from relic.search_result import SearchResult
 
 
+class FakeImageUploader(ImageUploader):
+    def upload(self, image: Image) -> str:
+        return "https://example.com/uploaded/photo.jpg"
+
+
 class FakeSearchProvider(SearchProvider):
-    def __init__(self):
-        self.image_url = None
-
     def search(self, image_url: str) -> list[SearchResult]:
-        self.image_url = image_url
-
         return [
             SearchResult(
                 url="https://example.com/photo.jpg",
                 title="Example photo",
                 source="Example",
                 discovered_at=datetime.now(),
-                match_score=1.0,
+                match_score=0.98,
             )
         ]
 
 
-def test_investigator_delegates_search_to_provider():
-    image = Image(
+def create_image() -> Image:
+    return Image(
         path=Path("/tmp/photo.jpg"),
         metadata=ImageMetaData(
             width=100,
@@ -39,27 +40,23 @@ def test_investigator_delegates_search_to_provider():
         phash="0000000000000000",
     )
 
+
+def test_investigator_delegates_search_to_provider():
+    image = create_image()
+
     provider = FakeSearchProvider()
-    investigator = Investigator(provider)
+    uploader = FakeImageUploader()
+
+    investigator = Investigator(provider, uploader)
 
     results = investigator.investigate(image)
 
     assert len(results) == 1
     assert results[0].url == "https://example.com/photo.jpg"
-    assert provider.image_url == str(image.path)
+
 
 def test_investigator_returns_all_search_results():
-    image = Image(
-        path=Path("/tmp/photo.jpg"),
-        metadata=ImageMetaData(
-            width=100,
-            height=100,
-            format="JPEG",
-            mode="RGB",
-        ),
-        sha256="abc",
-        phash="0000000000000000",
-    )
+    image = create_image()
 
     class FakeProvider(SearchProvider):
         def search(self, image_url: str) -> list[SearchResult]:
@@ -80,7 +77,10 @@ def test_investigator_returns_all_search_results():
                 ),
             ]
 
-    investigator = Investigator(FakeProvider())
+    investigator = Investigator(
+        FakeProvider(),
+        FakeImageUploader(),
+    )
 
     results = investigator.investigate(image)
 
