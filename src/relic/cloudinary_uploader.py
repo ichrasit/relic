@@ -4,10 +4,10 @@ from relic.image import Image
 
 class CloudinaryUploader:
     def __init__(
-            self,
-            cloud_name: str,
-            upload_preset: str,
-            client: httpx.Client | None = None,
+        self,
+        cloud_name: str,
+        upload_preset: str,
+        client: httpx.Client | None = None,
     ):
         self.cloud_name = cloud_name
         self.upload_preset = upload_preset
@@ -15,7 +15,7 @@ class CloudinaryUploader:
 
     def upload(self, image: Image) -> str:
         url = (
-            f"https://api.cloudinary.com/v1_1"
+            f"https://api.cloudinary.com/v1_1/"
             f"{self.cloud_name}/image/upload"
         )
 
@@ -26,5 +26,6 @@ class CloudinaryUploader:
                 files={"file": file},
             )
 
-            response.raise_for_status()
-            return response.json()["secure_url"]
+        response.raise_for_status()
+
+        return response.json()["secure_url"]
