@@ -13,8 +13,7 @@ dependencies = [
     "httpx>=0.27",
 ]
 [project.scripts]
-relic = "relic.cli:main"
-
+relic = "main:main"
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
